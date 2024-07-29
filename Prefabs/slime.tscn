@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://dxkuw6jdlg7l3"]
+
+[ext_resource type="Script" path="res://Scripts/slime.gd" id="1_lf1ka"]
+[ext_resource type="Texture2D" uid="uid://cg341p3gbn7f6" path="res://Sprites/icon.svg" id="1_yony0"]
+
+[sub_resource type="Curve2D" id="Curve2D_5cfq3"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -4, 187, 0, 0, 0, 0, -4, 187, 0, 0, 0, 0, 212.079, 186, 0, 0, 0, 0, -3.99999, 187)
+}
+point_count = 4
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p5b4q"]
+size = Vector2(118.38, 121.607)
+
+[node name="slime" type="Node2D"]
+position = Vector2(96, -54)
+script = ExtResource("1_lf1ka")
+metadata/_edit_group_ = true
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(9.49872, 0)
+scale = Vector2(0.87468, 1)
+curve = SubResource("Curve2D_5cfq3")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(-4.15167, 187.001)
+rotation = 0.00511505
+rotates = false
+
+[node name="Area2D" type="Area2D" parent="Path2D/PathFollow2D"]
+scale = Vector2(0.25, 0.25)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/Area2D"]
+position = Vector2(-2.50253, -0.487213)
+shape = SubResource("RectangleShape2D_p5b4q")
+
+[node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D/Area2D"]
+texture = ExtResource("1_yony0")
+
+[connection signal="area_entered" from="Path2D/PathFollow2D/Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Path2D/PathFollow2D/Area2D" to="." method="_on_area_2d_body_entered"]
